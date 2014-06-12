@@ -55,4 +55,9 @@
  */
 - (IBAction)setYesState:(id)sender;
 
+/**
+ Controls the current state and executes the provided block when the resulting actions complete
+ */
+- (void)setState:(BOOL)state completion:(void (^)())completion;
+
 @end

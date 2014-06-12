@@ -12,6 +12,11 @@
 
 - (void)setState:(BOOL)state
 {
+  [self setState:state completion:nil];
+}
+
+- (void)setState:(BOOL)state completion:(void (^)())completion
+{
     _state = state;
     
     for (NSLayoutConstraint *c in self.noStateConstraints) {
@@ -25,10 +30,14 @@
         [UIView animateWithDuration:self.animationDuration delay:0 options:self.animationCurve << 16 animations:^{
             [self.layoutedView layoutIfNeeded];
         } completion:^(BOOL finished) {
+          if (completion)
+            completion();
         }];
     }
     else {
-        [self.layoutedView layoutIfNeeded];
+      [self.layoutedView layoutIfNeeded];
+      if (completion)
+        completion();
     }
 }
 
